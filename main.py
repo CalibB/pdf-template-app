@@ -10,10 +10,12 @@ pdf.set_font('Helvetica', style='B')
 pdf.set_auto_page_break(auto=False)
 
 for index, row in df.iterrows():
+    # Generate main topic pages
     pages = int(row['Pages'])
     pdf.add_page()
     pdf.set_font_size(25)
     pdf.set_text_color(0, 0, 0)
+    pdf.set_draw_color(0, 0, 0)
     pdf.cell(w=0, h=12, txt=row['Topic'], border='B')
 
     # Set Footer
@@ -21,17 +23,14 @@ for index, row in df.iterrows():
     pdf.set_text_color(180, 180, 180)
     pdf.ln(278)
     pdf.cell(w=0, txt=row['Topic'], align='R')
-    pages = pages - 1
 
     # Page lines
-    starting_y_position = 32
     pdf.set_draw_color(180, 180, 180)
-    pdf.line(10, starting_y_position, 200, starting_y_position)
-    for i in range(0, 25):
-        starting_y_position = starting_y_position + 10
-        pdf.line(10, starting_y_position, 200, starting_y_position)
+    for y in range(32, 285, 10):
+        pdf.line(10, y, 200, y)
 
-    for pages in range(pages):
+    # Generate each topic's page amount
+    for pages in range(pages - 1):
         pdf.add_page()
 
         # Set Footer
@@ -41,11 +40,7 @@ for index, row in df.iterrows():
         pdf.cell(w=0, txt=row['Topic'], align='R')
 
         # Page lines
-        starting_y_position = 32
-        pdf.set_draw_color(180, 180, 180)
-        pdf.line(10, starting_y_position, 200, starting_y_position)
-        for i in range(0, 25):
-            starting_y_position = starting_y_position + 10
-            pdf.line(10, starting_y_position, 200, starting_y_position)
+        for y in range(32, 285, 10):
+            pdf.line(10, y, 200, y)
 
 pdf.output(name='test.pdf')
