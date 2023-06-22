@@ -13,8 +13,7 @@ for index, row in df.iterrows():
     pdf.add_page()
     pdf.cell(w=0, h=12, txt=row['Topic'], border='B')
     pages = pages - 1
-    while pages >= 0:
+    for pages in range(pages):
         pdf.add_page()
-        pages = pages - 1
 
 pdf.output(name='test.pdf')
